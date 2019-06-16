@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class HtwJFrame extends JFrame{
+public class HtwJFrame extends JFrame {
 	public static final String CLICK_ME_BUTTON = "ClickMe";
 	private String title = "JFrame Magic";
 	private int width = 600;
@@ -30,34 +30,41 @@ public class HtwJFrame extends JFrame{
 		setTitle(title);
 		setSize(width, height);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		actionHandler = new ActionHandler();
 		this.setJMenuBar(initMenuBar());
-		JPanel htwPanel = init(); //preparePanel();
+		JPanel htwPanel = init(); // preparePanel();
 		this.add(htwPanel);
 	}
 
 	private JMenuBar initMenuBar() {
 		menuActionListener = new MenuHandler();
 		JMenuBar bar = new JMenuBar();
-		JMenu menu = new JMenu("File");
-		JMenuItem menuItemOpen = new JMenuItem("Open ...");
-		menuItemOpen.addActionListener(menuActionListener);
-		menu.add(menuItemOpen );
-		bar.add(menu );
-		
+		String topLevelMenu[] = { "File", "Edit", "View", "Help" };
+		String menuItems[][] = { { "Open ...", "Save", "Exit" }, { "Select" }, { "Zoom" }, { "Support" } };
+		for (int i = 0; i < topLevelMenu.length; i++) {
+			JMenu menu = new JMenu(topLevelMenu[i]);
+			for (int j = 0; j < menuItems[i].length; j++) {
+				JMenuItem menuItem = new JMenuItem(menuItems[i][j]);
+				menuItem.setName(menuItem.getText());
+				menuItem.addActionListener(menuActionListener);
+				menu.add(menuItem);
+			}
+			bar.add(menu);
+		}
+
 		return bar;
 	}
 
 	private JPanel init() {
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.YELLOW);
-		
+
 		JButton clickMeButton = new JButton("Click me!");
 		clickMeButton.addActionListener(actionHandler);
 		clickMeButton.setName(CLICK_ME_BUTTON);
 		panel.add(clickMeButton);
-		
+
 		JButton doNotClickButton = new JButton("Do NOT click me!");
 		doNotClickButton.addActionListener(actionHandler);
 		panel.add(doNotClickButton);
@@ -68,30 +75,29 @@ public class HtwJFrame extends JFrame{
 			@Override
 			public void keyTyped(KeyEvent e) {
 				super.keyTyped(e);
-				
-				Object sourceObject =  e.getSource();
-				if(sourceObject instanceof JTextArea) {
+
+				Object sourceObject = e.getSource();
+				if (sourceObject instanceof JTextArea) {
 					JTextArea sourceTextArea = (JTextArea) sourceObject;
 					label.setText(sourceTextArea.getText().length() + " chars");
 				}
 			}
 		});
 		panel.add(textArea);
-		
-		
+
 		panel.add(label);
-		
-		final JTextField userInput = new JTextField(20);		
+
+		final JTextField userInput = new JTextField(20);
 		panel.add(userInput);
-		
+
 		JButton addUserInput = new JButton("Add to options");
 		panel.add(addUserInput);
-		
-		final JComboBox <String> userOptions = new JComboBox<>();		
+
+		final JComboBox<String> userOptions = new JComboBox<>();
 		panel.add(userOptions);
-		
+
 		addUserInput.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				userOptions.addItem(userInput.getText());
