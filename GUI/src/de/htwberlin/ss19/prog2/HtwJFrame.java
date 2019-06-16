@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -100,7 +101,21 @@ public class HtwJFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				userOptions.addItem(userInput.getText());
+				String newOption = userInput.getText();
+				ArrayList<String> existingOptions = readAllExistingOptions();
+				boolean optionExists = existingOptions.contains(newOption);
+				if(!optionExists)
+				userOptions.addItem(newOption);
+			}
+
+			private ArrayList<String> readAllExistingOptions() {
+				int size = userOptions.getItemCount();
+				ArrayList<String> items = new ArrayList<>();
+				for (int i = 0; i < size; i++) {
+				  String item = userOptions.getItemAt(i);
+				  items.add(item);
+			}
+				return items;
 			}
 		});
 		return panel;
