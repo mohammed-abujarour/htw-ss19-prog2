@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class HtwJFrame extends JFrame implements ActionListener{
+	private static final String CLICK_ME_BUTTON = "ClickMe";
 	private String title = "JFrame Magic";
 	private int width = 600;
 	private int height = 400;
@@ -26,18 +27,28 @@ public class HtwJFrame extends JFrame implements ActionListener{
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.YELLOW);
 		
-		JButton button = new JButton("Click me!");
-		button.addActionListener(this);
+		JButton clickMeButton = new JButton("Click me!");
+		clickMeButton.addActionListener(this);
+		clickMeButton.setName(CLICK_ME_BUTTON);
+		panel.add(clickMeButton);
 		
-		panel.add(button);
-		
+		JButton doNotClickButton = new JButton("Do NOT click me!");
+		doNotClickButton.addActionListener(this);
+		panel.add(doNotClickButton);
+
 		return panel;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
-		System.out.println(e.getSource());
+		Object source = e.getSource();
+		if(! (source instanceof JButton))
+			return;
+		JButton sourceButton = (JButton) source;
+		if(! CLICK_ME_BUTTON.equalsIgnoreCase(sourceButton.getName()))
+			return;
+		
+		System.out.println(sourceButton.getName() + " pressed!");
 		
 	}
 }
