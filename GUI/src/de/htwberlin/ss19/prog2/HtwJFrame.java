@@ -3,10 +3,16 @@ package de.htwberlin.ss19.prog2;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 public class HtwJFrame extends JFrame{
 	public static final String CLICK_ME_BUTTON = "ClickMe";
@@ -38,7 +44,25 @@ public class HtwJFrame extends JFrame{
 		JButton doNotClickButton = new JButton("Do NOT click me!");
 		doNotClickButton.addActionListener(actionHandler);
 		panel.add(doNotClickButton);
+		final JLabel label = new JLabel();
 
+		JTextArea textArea = new JTextArea(10, 40);
+		textArea.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				super.keyTyped(e);
+				
+				Object sourceObject =  e.getSource();
+				if(sourceObject instanceof JTextArea) {
+					JTextArea sourceTextArea = (JTextArea) sourceObject;
+					label.setText(sourceTextArea.getText().length() + " chars");
+				}
+			}
+		});
+		panel.add(textArea);
+		
+		
+		panel.add(label);
 		return panel;
 	}
 }
