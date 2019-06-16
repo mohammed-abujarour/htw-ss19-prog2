@@ -1,7 +1,6 @@
 package de.htwberlin.ss19.prog2;
 
 import java.awt.Color;
-import java.awt.MenuBar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -15,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -58,7 +58,7 @@ public class HtwJFrame extends JFrame {
 	}
 
 	private JPanel init() {
-		JPanel panel = new JPanel();
+		final JPanel panel = new JPanel();
 		panel.setBackground(Color.YELLOW);
 
 		JButton clickMeButton = new JButton("Click me!");
@@ -104,17 +104,34 @@ public class HtwJFrame extends JFrame {
 				String newOption = userInput.getText();
 				ArrayList<String> existingOptions = readAllExistingOptions();
 				boolean optionExists = existingOptions.contains(newOption);
-				if(!optionExists)
-				userOptions.addItem(newOption);
+				if (optionExists) {
+					int answer = JOptionPane.showConfirmDialog(panel,
+							"Option already exists?\nDo you want to add it anyways?");
+					String message = "";
+
+					if (answer == JOptionPane.YES_OPTION) {
+						userOptions.addItem(newOption);
+						message = new String("Duplicated item added to option list");
+						JOptionPane.showMessageDialog(panel, message);
+					} else if (answer == JOptionPane.NO_OPTION) {
+						message = new String("Duplicated item discarded from option list");
+						JOptionPane.showMessageDialog(panel, message);
+					} else if (answer == JOptionPane.CANCEL_OPTION) {
+						message = new String("Action cancelled");
+						JOptionPane.showMessageDialog(panel, message);
+					}
+
+				} else
+					userOptions.addItem(newOption);
 			}
 
 			private ArrayList<String> readAllExistingOptions() {
 				int size = userOptions.getItemCount();
 				ArrayList<String> items = new ArrayList<>();
 				for (int i = 0; i < size; i++) {
-				  String item = userOptions.getItemAt(i);
-				  items.add(item);
-			}
+					String item = userOptions.getItemAt(i);
+					items.add(item);
+				}
 				return items;
 			}
 		});
