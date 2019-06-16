@@ -1,12 +1,15 @@
 package de.htwberlin.ss19.prog2;
 
 import java.awt.Color;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -60,15 +63,23 @@ public class HtwJFrame extends JFrame {
 	private JPanel init() {
 		final JPanel panel = new JPanel();
 		panel.setBackground(Color.YELLOW);
-
+		panel.setLayout(new GridLayout(3, 1));
+		
 		JButton clickMeButton = new JButton("Click me!");
 		clickMeButton.addActionListener(actionHandler);
 		clickMeButton.setName(CLICK_ME_BUTTON);
-		panel.add(clickMeButton);
+//		panel.add(clickMeButton);
 
 		JButton doNotClickButton = new JButton("Do NOT click me!");
 		doNotClickButton.addActionListener(actionHandler);
-		panel.add(doNotClickButton);
+		//panel.add(doNotClickButton);
+		
+		JPanel buttonsPanel = new JPanel();
+		buttonsPanel.add(clickMeButton);
+		buttonsPanel.add(doNotClickButton);
+		
+		panel.add(buttonsPanel);
+		
 		final JLabel label = new JLabel();
 
 		JTextArea textArea = new JTextArea(10, 40);
@@ -84,19 +95,26 @@ public class HtwJFrame extends JFrame {
 				}
 			}
 		});
-		panel.add(textArea);
-
-		panel.add(label);
+		
+		JPanel textAreaPanel = new JPanel();
+		textAreaPanel.setLayout(new GridLayout(2, 1));
+		textAreaPanel.add(textArea);
+		textAreaPanel.add(label);
+		panel.add(textAreaPanel);
 
 		final JTextField userInput = new JTextField(20);
-		panel.add(userInput);
 
 		JButton addUserInput = new JButton("Add to options");
-		panel.add(addUserInput);
 
 		final JComboBox<String> userOptions = new JComboBox<>();
-		panel.add(userOptions);
 
+		JPanel optionsPanel = new JPanel();
+		optionsPanel.add(userInput);
+		optionsPanel.add(addUserInput);
+		optionsPanel.add(userOptions);
+
+		panel.add(optionsPanel);
+		
 		addUserInput.addActionListener(new ActionListener() {
 
 			@Override
