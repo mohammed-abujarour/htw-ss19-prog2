@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -63,6 +64,23 @@ public class HtwJFrame extends JFrame{
 		
 		
 		panel.add(label);
+		
+		final JTextField userInput = new JTextField(20);		
+		panel.add(userInput);
+		
+		JButton addUserInput = new JButton("Add to options");
+		panel.add(addUserInput);
+		
+		final JComboBox <String> userOptions = new JComboBox<>();		
+		panel.add(userOptions);
+		
+		addUserInput.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				userOptions.addItem(userInput.getText());
+			}
+		});
 		return panel;
 	}
 }
