@@ -1,15 +1,19 @@
 package de.htwberlin.ss19.prog2;
 
 import java.awt.Color;
-import java.awt.GridBagLayout;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.swing.GroupLayout;
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -64,7 +68,7 @@ public class HtwJFrame extends JFrame {
 		final JPanel panel = new JPanel();
 		panel.setBackground(Color.YELLOW);
 		panel.setLayout(new GridLayout(3, 1));
-		
+
 		JButton clickMeButton = new JButton("Click me!");
 		clickMeButton.addActionListener(actionHandler);
 		clickMeButton.setName(CLICK_ME_BUTTON);
@@ -72,14 +76,14 @@ public class HtwJFrame extends JFrame {
 
 		JButton doNotClickButton = new JButton("Do NOT click me!");
 		doNotClickButton.addActionListener(actionHandler);
-		//panel.add(doNotClickButton);
-		
+		// panel.add(doNotClickButton);
+
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.add(clickMeButton);
 		buttonsPanel.add(doNotClickButton);
-		
+
 		panel.add(buttonsPanel);
-		
+
 		final JLabel label = new JLabel();
 
 		JTextArea textArea = new JTextArea(10, 40);
@@ -95,7 +99,7 @@ public class HtwJFrame extends JFrame {
 				}
 			}
 		});
-		
+
 		JPanel textAreaPanel = new JPanel();
 		textAreaPanel.setLayout(new GridLayout(2, 1));
 		textAreaPanel.add(textArea);
@@ -114,7 +118,7 @@ public class HtwJFrame extends JFrame {
 		optionsPanel.add(userOptions);
 
 		panel.add(optionsPanel);
-		
+
 		addUserInput.addActionListener(new ActionListener() {
 
 			@Override
@@ -155,4 +159,23 @@ public class HtwJFrame extends JFrame {
 		});
 		return panel;
 	}
+
+	@Override
+	public void paint(Graphics g) {
+		super.paint(g);
+
+		g.drawRect(45, 60, 200, 200);
+		g.drawOval(45, 60, 200, 200);
+		Graphics2D g2 = (Graphics2D) g;
+		Image img;
+		try {
+			img = ImageIO.read(new File("res/classroom-logo.png"));
+			g2.drawImage(img, 20, 60, 80, 80, null);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 }
