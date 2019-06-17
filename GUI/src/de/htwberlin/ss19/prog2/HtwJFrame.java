@@ -164,8 +164,8 @@ public class HtwJFrame extends JFrame {
 	public void paint(Graphics g) {
 		super.paint(g);
 
-		g.drawRect(45, 60, 200, 200);
-		g.drawOval(45, 60, 200, 200);
+		g.drawRect(500, 50, 100, 100);
+		g.drawOval(500, 50, 100, 100);
 		Graphics2D g2 = (Graphics2D) g;
 		Image img;
 		try {
