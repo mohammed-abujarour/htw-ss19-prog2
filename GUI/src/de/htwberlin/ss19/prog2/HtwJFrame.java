@@ -25,6 +25,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 public class HtwJFrame extends JFrame {
 	public static final String CLICK_ME_BUTTON = "ClickMe";
@@ -38,11 +40,33 @@ public class HtwJFrame extends JFrame {
 		setTitle(title);
 		setSize(width, height);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		setLookAndFeel();
 
 		actionHandler = new ActionHandler();
 		this.setJMenuBar(initMenuBar());
 		JPanel htwPanel = init(); // preparePanel();
 		this.add(htwPanel);
+	}
+
+	private void setLookAndFeel() {
+		try {
+            // Set cross-platform Java L&F (also called "Metal")
+        UIManager.setLookAndFeel(
+            UIManager.getCrossPlatformLookAndFeelClassName());
+    } 
+    catch (UnsupportedLookAndFeelException e) {
+       // handle exception
+    }
+    catch (ClassNotFoundException e) {
+       // handle exception
+    }
+    catch (InstantiationException e) {
+       // handle exception
+    }
+    catch (IllegalAccessException e) {
+       // handle exception
+    }		
 	}
 
 	private JMenuBar initMenuBar() {
