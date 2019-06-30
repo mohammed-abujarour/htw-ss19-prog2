@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -27,6 +28,7 @@ import de.htwberlin.prog2.ss19.kv.model.FaxExportStrategy;
 import de.htwberlin.prog2.ss19.kv.model.FileExportStrategy;
 import de.htwberlin.prog2.ss19.kv.model.Product;
 import de.htwberlin.prog2.ss19.kv.util.PriceSorter;
+import de.htwberlin.prog2.ss19.kv.utils.IOUtils;
 
 public class ProductsFrame extends JFrame {
 
@@ -70,6 +72,21 @@ public class ProductsFrame extends JFrame {
 		topPanel.setBackground(lightBlue);
 
 		JButton btnLoad = new JButton("Load from file *");
+		btnLoad.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				List<Product> importedProducts = IOUtils.readProducts();
+
+				if (importedProducts == null)
+					return;
+
+				products.removeAllElements();
+
+				for (Product product : importedProducts)
+					products.addElement(product);
+			}
+		});
 		topPanel.add(btnLoad);
 
 		JButton btnSort = new JButton("Sort by name");
