@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import de.htwberlin.prog2.ss19.kv.model.Product;
+import de.htwberlin.prog2.ss19.kv.util.PriceSorter;
 
 public class ProductsFrame extends JFrame {
 
@@ -84,6 +85,22 @@ public class ProductsFrame extends JFrame {
 		topPanel.add(btnSort);
 
 		JButton btnSortByPrice = new JButton("Sort by price");
+		btnSortByPrice.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+
+				ArrayList<Product> list = new ArrayList<Product>();
+				Enumeration<Product> elements = products.elements();
+				while (elements.hasMoreElements())
+					list.add(elements.nextElement());
+
+				Collections.sort(list, new PriceSorter());
+
+				products.removeAllElements();
+				for (Product product : list)
+					products.addElement(product);
+			}
+		});
 		topPanel.add(btnSortByPrice);
 
 		JButton btnExport = new JButton("Export to ...");
