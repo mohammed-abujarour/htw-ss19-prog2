@@ -3,13 +3,17 @@ package de.htwberlin.prog2.ss19.kv.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -25,6 +29,7 @@ public class ProductsFrame extends JFrame {
 	private JTextField textFieldCategory;
 	private JTextField textFieldName;
 	private JTextField textFieldPrice;
+	private DefaultListModel<Product> products = new DefaultListModel<>();
 
 	/**
 	 * Create the frame.
@@ -78,6 +83,7 @@ public class ProductsFrame extends JFrame {
 	 */
 	private JList<Product> createList() {
 		JList<Product> list = new JList<Product>();
+		list.setModel(products);
 		return list;
 	}
 
@@ -109,6 +115,11 @@ public class ProductsFrame extends JFrame {
 		panel.add(textFieldPrice);
 
 		JButton btnAdd = new JButton("Add");
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				createProduct();
+			}
+		});
 		panel.add(btnAdd);
 
 		JButton btnCancel = new JButton("Cancel");
@@ -130,4 +141,29 @@ public class ProductsFrame extends JFrame {
 		this.setContentPane(contentPane);
 	}
 
+	/**
+	 * This method reads users input from GUI elements and creates an product
+	 * object, and adds it to the list of products
+	 */
+	private boolean createProduct() {
+
+		String name = textFieldName.getText();
+		String category = textFieldCategory.getText();
+		double price = 0;
+		try {
+			price = Double.parseDouble(textFieldPrice.getText());
+		} catch (Exception exc) {
+			JOptionPane.showInternalMessageDialog(contentPane, exc.getMessage());
+			return false;
+		}
+		try {
+			Product product = new Product(name, category, price);
+			products.addElement(product);
+
+		} catch (Exception exc) {
+			JOptionPane.showInternalMessageDialog(contentPane, exc.getMessage());
+			return false;
+		}
+		return true;
+	}
 }
