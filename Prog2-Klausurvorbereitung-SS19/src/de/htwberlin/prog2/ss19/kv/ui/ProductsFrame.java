@@ -88,18 +88,18 @@ public class ProductsFrame extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setBorder(new EmptyBorder(10, 2, 10, 2));
 		panel.setBackground(yellow);
-		panel.setLayout(new GridLayout(4, 2, 0, 30));
+		panel.setLayout(new GridLayout(4, 2, 0, 40));
 
 		JLabel label = new JLabel("Name");
 		panel.add(label);
 
-		textFieldName = new JTextField();
+		textFieldName = new JTextField(10);
 		panel.add(textFieldName);
 
 		JLabel lblCategory = new JLabel("Category");
 		panel.add(lblCategory);
 
-		textFieldCategory = new JTextField();
+		textFieldCategory = new JTextField(10);
 		panel.add(textFieldCategory);
 
 		JLabel lblPrice = new JLabel("Price");
