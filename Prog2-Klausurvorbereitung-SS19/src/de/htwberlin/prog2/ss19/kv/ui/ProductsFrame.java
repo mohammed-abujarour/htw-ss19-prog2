@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -57,7 +58,7 @@ public class ProductsFrame extends JFrame {
 		contentPane.add(yellowPanel, BorderLayout.WEST);
 
 		JList<Product> list = createList();
-		contentPane.add(list, BorderLayout.CENTER);
+		contentPane.add(new JScrollPane(list), BorderLayout.CENTER);
 
 	}
 
