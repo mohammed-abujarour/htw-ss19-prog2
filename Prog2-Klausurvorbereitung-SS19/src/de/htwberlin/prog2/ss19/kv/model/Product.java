@@ -2,7 +2,7 @@ package de.htwberlin.prog2.ss19.kv.model;
 
 import de.htwberlin.prog2.ss19.kv.exc.InvalidValueException;
 
-public class Product {
+public class Product implements Comparable<Product>{
 	
 	private String name;
 	private String category;
@@ -39,6 +39,10 @@ public class Product {
 	@Override
 	public String toString() {
 		return name + " (" + category + ") - " + price ;
+	}
+
+	public int compareTo(Product product2) {
+		return this.name.compareTo(product2.getName());
 	}
 	
 	
