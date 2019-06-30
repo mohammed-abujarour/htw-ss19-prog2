@@ -66,19 +66,19 @@ public class ProductsFrame extends JFrame {
 		topPanel.add(btnLoad);
 
 		JButton btnSort = new JButton("Sort by name");
-		btnSort.addActionListener(new ActionListener() {			
+		btnSort.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				
+
 				ArrayList<Product> list = new ArrayList<Product>();
 				Enumeration<Product> elements = products.elements();
-				while(elements.hasMoreElements())
+				while (elements.hasMoreElements())
 					list.add(elements.nextElement());
+
 				Collections.sort(list);
+
 				products.removeAllElements();
-				for(Product product : list)
+				for (Product product : list)
 					products.addElement(product);
-				
 			}
 		});
 		topPanel.add(btnSort);
