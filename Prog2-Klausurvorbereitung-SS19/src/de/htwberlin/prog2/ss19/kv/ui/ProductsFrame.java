@@ -193,6 +193,16 @@ public class ProductsFrame extends JFrame {
 		panel.add(btnAdd);
 
 		JButton btnCancel = new JButton("Cancel");
+		btnCancel.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				textFieldName.setText("");
+				textFieldCategory.setText("");
+				textFieldPrice.setText("");
+
+			}
+		});
 		panel.add(btnCancel);
 
 		return panel;
