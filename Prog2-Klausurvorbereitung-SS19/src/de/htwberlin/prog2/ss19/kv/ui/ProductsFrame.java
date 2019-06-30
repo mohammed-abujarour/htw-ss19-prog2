@@ -21,6 +21,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import de.htwberlin.prog2.ss19.kv.model.EmailExportStrategy;
+import de.htwberlin.prog2.ss19.kv.model.ExportStrategy;
+import de.htwberlin.prog2.ss19.kv.model.FaxExportStrategy;
+import de.htwberlin.prog2.ss19.kv.model.FileExportStrategy;
 import de.htwberlin.prog2.ss19.kv.model.Product;
 import de.htwberlin.prog2.ss19.kv.util.PriceSorter;
 
@@ -34,6 +38,8 @@ public class ProductsFrame extends JFrame {
 	private JTextField textFieldName;
 	private JTextField textFieldPrice;
 	private DefaultListModel<Product> products = new DefaultListModel<>();
+	private ExportStrategy exportStrategy;
+	private JComboBox<ExportStrategy> comboBox;
 
 	/**
 	 * Create the frame.
@@ -86,7 +92,7 @@ public class ProductsFrame extends JFrame {
 
 		JButton btnSortByPrice = new JButton("Sort by price");
 		btnSortByPrice.addActionListener(new ActionListener() {
-			
+
 			public void actionPerformed(ActionEvent e) {
 
 				ArrayList<Product> list = new ArrayList<Product>();
@@ -104,10 +110,22 @@ public class ProductsFrame extends JFrame {
 		topPanel.add(btnSortByPrice);
 
 		JButton btnExport = new JButton("Export to ...");
+		btnExport.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				exportStrategy = (ExportStrategy) comboBox.getSelectedItem();
+				boolean result = exportStrategy.export();
+				JOptionPane.showInternalMessageDialog(contentPane,
+						"Die Export Aufgabe " + (result ? "war erfolgreich" : "war leider nicht erfolgreich"),
+						"Export Result", JOptionPane.INFORMATION_MESSAGE);
+
+			}
+		});
 		topPanel.add(btnExport);
 
-		JComboBox<String> comboBox = new JComboBox<String>();
-		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] { "File", "Email", "Fax" }));
+		comboBox = new JComboBox<ExportStrategy>();
+		comboBox.setModel(new DefaultComboBoxModel<ExportStrategy>(new ExportStrategy[] {
+				new FileExportStrategy(products), new EmailExportStrategy(), new FaxExportStrategy() }));
 		topPanel.add(comboBox);
 
 		return topPanel;
